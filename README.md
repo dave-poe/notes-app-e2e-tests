@@ -10,3 +10,35 @@ Tests in this repository are automatically triggered when a deployment completes
 - **Backend Deployment**: Triggers a `trigger-production-tests-backend` event.
 
 These events kick off the Playwright production tests workflow in this repository.
+
+## Trigger Configuration Example
+To trigger these tests from another repository, use the `repository-dispatch` action:
+
+```yaml
+- name: Trigger E2E Tests
+  if: success()
+  uses: peter-evans/repository-dispatch@v3
+  with:
+    token: ${{ secrets.G_ACCESS_TOKEN }}
+    repository: dave-poe/notes-app-e2e-tests
+    event-type: trigger-production-tests-frontend
+    client-payload: '{ "environment": "production" }'
+```
+
+> [!IMPORTANT]
+> The `G_ACCESS_TOKEN` is a Personal Access Token (PAT) with `repo` scope. It must be created by a user with access to the target repository and added as a repository secret in the triggering repository. This is required because the default `GITHUB_TOKEN` does not have permission to trigger workflows in other repositories.
+
+## Reading the Client Payload
+In the receiving workflow (this repository), you can access the data sent in the `client-payload` using the `github.event.client_payload` context.
+
+Example:
+
+```yaml
+jobs:
+  build:
+    steps:
+    - name: Run Playwright Tests
+      run: |
+        echo "Environment: ${{ github.event.client_payload.environment }}"
+        # Use the environment variable in your tests
+```
