@@ -1,6 +1,6 @@
 # notes-app-e2e-tests
 
-**Link to Source Code**: [notes-app-full-stack-testing](https://github.com/helloitsdave/notes-app-full-stack-testing)
+**Link to Source Code (Frontend / Backend)**: [notes-app-full-stack-testing](https://github.com/helloitsdave/notes-app-full-stack-testing)
 
 ## Overview
 This repository contains end-to-end (E2E) tests for the Notes App. It is specifically designed to demonstrate **how to trigger Playwright tests when they live in a different repository to the source code**. Ideally the playwright code should live alongside the frontend code, but this is not always possible.
