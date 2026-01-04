@@ -26,6 +26,8 @@ jobs:
 
     - name: Run Playwright Tests against chromium
       run: |
+       # Testing if we can get the playload from the event
+        echo "Environment: ${{ github.event.client_payload.environment }}"
         yarn test:production
 
     - name: Upload Playwright Report to Artifacts
